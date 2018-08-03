@@ -43,6 +43,8 @@ public class BLECentralSessionPlugin extends CordovaPlugin {
                     e.printStackTrace();
 
                     callbackContext.error(BAD_PARAMETERS);
+
+                    return;
                 }
 
                 if (action.equals("write") && !writeData.equals(""))
