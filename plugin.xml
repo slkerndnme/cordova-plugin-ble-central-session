@@ -1,45 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.example.hello"
-        version="0.7.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-ble-central-session"
+        version="1.0.0">
 
-  <name>Hello</name>
+  <name>Cordova Plugin BLE Central session</name>
 
   <engines>
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
 
-  <asset src="www/hello.js" target="js/hello.js"/>
-
-  <js-module src="www/hello.js" name="hello">
-    <clobbers target="hello" />
+  <js-module src="www/BLECentralSession.js" name="BLECentralSession">
+    <clobbers target="BLECentralSession" />
   </js-module>
 
   <platform name="android">
 
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+      <uses-permission android:name="android.permission.BLUETOOTH"/>
+      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    </config-file>
+
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Hello">
-        <param name="android-package" value="com.example.plugin.Hello"/>
+      <feature name="BLECentralSessionPlugin">
+        <param name="android-package" value="com.slkerndnme.cordova.blecentralsession.BLECentralSessionPlugin"/>
       </feature>
     </config-file>
 
-    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
+    <source-file src="src/android/BLECentralSessionPlugin.java" target-dir="src/com/slkerndnme/cordova/blecentralsession" />
+    <source-file src="src/android/BLECentralSession.java" target-dir="src/com/slkerndnme/cordova/blecentralsession"/>
   </platform>
 
   <platform name="ios">
-    
-    <config-file target="config.xml" parent="/widget">
-      <feature name="Hello">
-        <param name="ios-package" value="HWPHello" />
-      </feature>
+
+    <preference name="BLUETOOTH_USAGE_DESCRIPTION" default=" " />
+
+    <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
+      <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
     </config-file>
 
-    <header-file src="src/ios/HWPHello.h" target-dir="HelloPlugin"/>
-    <source-file src="src/ios/HWPHello.m" target-dir="HelloPlugin"/>
-  </platform>
+    <config-file target="config.xml" parent="/*">
 
-  <platform name="wp7">
-    <source-file src="src/wp7/Hello.cs"/>
+      <feature name="BLECentralSessionPlugin">
+        <param name="ios-package" value="CDVBLECentralSessionPlugin" />
+      </feature>
+
+    </config-file>
+
+    <source-file src="src/ios/CDVBLECentralSessionPlugin.swift" target-dir="CDVBLECentralSessionPlugin" />
+    <source-file src="src/ios/CDVBLECentralSession.swift" target-dir="CDVBLECentralSessionPlugin" />
+
   </platform>
 
 </plugin>
